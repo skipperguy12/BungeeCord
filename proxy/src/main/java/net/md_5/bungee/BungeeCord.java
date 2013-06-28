@@ -68,6 +68,10 @@ import net.md_5.bungee.tab.Custom;
 import net.md_5.bungee.util.CaseInsensitiveMap;
 import org.fusesource.jansi.AnsiConsole;
 
+//EXPLOSIVE NETWORK
+import com.explosivenetwork.ExplosiveMessenger.Server.Server;
+
+
 /**
  * Main BungeeCord proxy class.
  */
@@ -144,7 +148,8 @@ public class BungeeCord extends ProxyServer
         getPluginManager().registerCommand( null, new CommandPerms() );
         getPluginManager().registerCommand( null, new CommandSend() );
         getPluginManager().registerCommand( null, new CommandFind() );
-
+        getPluginManager().registerCommand( null, new CommandSendCommand() );
+        
         registerChannel( "BungeeCord" );
     }
 
@@ -193,6 +198,7 @@ public class BungeeCord extends ProxyServer
         ProxyServer.setInstance( bungee );
         bungee.getLogger().info( "Enabled BungeeCord version " + bungee.getVersion() );
         bungee.start();
+        Server.start();
 
         while ( bungee.isRunning )
         {
@@ -336,7 +342,7 @@ public class BungeeCord extends ProxyServer
                     plugin.onDisable();
                     getScheduler().cancel( plugin );
                 }
-
+                Server.stop();
                 getLogger().info( "Thankyou and goodbye" );
                 System.exit( 0 );
             }
